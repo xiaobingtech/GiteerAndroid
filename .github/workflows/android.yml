@@ -71,4 +71,4 @@ jobs:
          asset_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk
          asset_content_type: application/zip
      - name: Bark
-       run: curl http%3A%2F%2Fpush.bark.xiaobingkj.com%2F4uMKBqxAmmRCPFUkyJLgnB%2FAndroid%E7%89%88Giteer%E5%8F%91%E5%B8%83%E6%96%B0%E7%89%88%E4%BA%86%EF%BC%81%2F%24%7B%7B%20github.event.repository.name%20%7D%7D%20%20%24%7B%7B%20steps.branch-name.outputs.current_branch%20%7D%7D%20v%24%7B%7B%20github.run_number%20%7D%7D.%24%7B%7B%20github.run_attempt%20%7D%7D.apk%3Fgroup%3DGiteerAndroid
+       run: curl http://push.bark.xiaobingkj.com/4uMKBqxAmmRCPFUkyJLgnB/Android%E7%89%88Giteer%E5%8F%91%E5%B8%83%E6%96%B0%E7%89%88%E4%BA%86%EF%BC%81%2F${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk?group=GiteerAndroid
