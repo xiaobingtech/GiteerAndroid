@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xiaobingkj.giteer.R;
-import com.xiaobingkj.giteer.TokenChangeListener;
+import com.xiaobingkj.giteer.listener.TokenChangeListener;
 import com.xiaobingkj.giteer.databinding.FragmentSearchBinding;
 
 public class SearchFragment extends Fragment implements TokenChangeListener {

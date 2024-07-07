@@ -22,6 +22,7 @@ import java.util.List;
 
 public class EventListAdapter extends BaseQuickAdapter<EventEntry, QuickViewHolder> {
 
+
     @Override
     protected void onBindViewHolder(@NonNull QuickViewHolder quickViewHolder, int i, @Nullable EventEntry eventEntry) {
         ImageView avatar = quickViewHolder.getView(R.id.avatar);
@@ -123,4 +124,5 @@ public class EventListAdapter extends BaseQuickAdapter<EventEntry, QuickViewHold
     protected QuickViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup viewGroup, int i) {
         return new QuickViewHolder(R.layout.item_event, viewGroup);
     }
+
 }

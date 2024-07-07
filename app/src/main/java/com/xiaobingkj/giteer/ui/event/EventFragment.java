@@ -3,6 +3,7 @@ package com.xiaobingkj.giteer.ui.event;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,20 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chad.library.adapter4.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaobingkj.giteer.R;
-import com.xiaobingkj.giteer.TokenChangeListener;
+import com.xiaobingkj.giteer.listener.TokenChangeListener;
 import com.xiaobingkj.giteer.databinding.FragmentEventBinding;
 import com.xiaobingkj.giteer.entry.ApiException;
 import com.xiaobingkj.giteer.entry.ErrorResponse;
 import com.xiaobingkj.giteer.entry.EventEntry;
 import com.xiaobingkj.giteer.singleton.Giteer;
-import com.xiaobingkj.giteer.ui.login.LoginActivity;
+import com.xiaobingkj.giteer.ui.webview.WebViewActivity;
 
 import java.util.List;
 
@@ -73,6 +74,29 @@ public class EventFragment extends Fragment implements TokenChangeListener {
                 footerRefresh();
             }
 
+        });
+
+        adapter.addOnItemChildClickListener(R.id.commit_id, new BaseQuickAdapter.OnItemChildClickListener<EventEntry>() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<EventEntry, ?> baseQuickAdapter, @NonNull View view, int i) {
+//                Toast.makeText(getActivity(), view.toString(), Toast.LENGTH_SHORT).show();
+                String url = adapter.getItem(i).getPayload().getCommits().get(0).getUrl();
+
+                // 假设apiUrl是一个StringBuilder类型，因为String在Java中是不可变的，这样更高效
+                StringBuilder apiUrl = new StringBuilder(url);
+
+                // 从apiUrl中移除特定位置的字符，循环13次
+                for (int index = 0; index < 13; index++) {
+                    apiUrl.deleteCharAt(18);
+                }
+
+                // 将apiUrl中的"commits"替换为"commit"
+                String result = apiUrl.toString().replace("commits", "commit");
+
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("url", result);
+                startActivity(intent);
+            }
         });
 
         headerRefresh();
@@ -138,7 +162,7 @@ public class EventFragment extends Fragment implements TokenChangeListener {
                     Log.d(TAG, "请求失败:", throwable);
                     if (throwable instanceof HttpStatusCodeException) {
                         HttpStatusCodeException apiException = (HttpStatusCodeException) throwable;
-                        Toast.makeText(getActivity(), apiException.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), apiException.getMessage(), Toast.LENGTH_SHORT).show();
                         int statusCode = apiException.getStatusCode();
                         if (statusCode == 401) {
 

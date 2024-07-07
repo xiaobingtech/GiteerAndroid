@@ -1,6 +1,5 @@
 package com.xiaobingkj.giteer.ui.me;
 
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -20,18 +19,16 @@ import android.widget.Toast;
 import com.chad.library.adapter4.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
+import com.xiaobingkj.giteer.MainActivity;
 import com.xiaobingkj.giteer.R;
-import com.xiaobingkj.giteer.TokenChangeListener;
+import com.xiaobingkj.giteer.listener.TokenChangeListener;
 import com.xiaobingkj.giteer.databinding.FragmentMeBinding;
 import com.xiaobingkj.giteer.entry.ApiException;
 import com.xiaobingkj.giteer.entry.ErrorResponse;
 import com.xiaobingkj.giteer.entry.MeEntry;
-import com.xiaobingkj.giteer.entry.StarEntry;
 import com.xiaobingkj.giteer.singleton.Giteer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -69,6 +66,14 @@ public class MeFragment extends Fragment implements TokenChangeListener {
 
         adapter = new MeAdapter(new ArrayList<>());
         binding.recycleView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener<MeEntry>() {
+            @Override
+            public void onClick(@NonNull BaseQuickAdapter<MeEntry, ?> baseQuickAdapter, @NonNull View view, int i) {
+                MainActivity activity = (MainActivity) getActivity();
+                activity.logout();
+            }
+        });
 
         return root;
     }

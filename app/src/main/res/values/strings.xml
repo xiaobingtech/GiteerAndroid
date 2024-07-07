@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Giteer</string>
 
-    <string name="login_btn">Login</string>
-    <string name="personal_btn">Private Token</string>
+    <string name="login_btn">登录</string>
+    <string name="personal_btn">私人令牌</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank ss</string>
-    
+
     <!--    刷新控件-->
     <string name="srl_header_pulling">下拉可以刷新</string>
     <string name="srl_header_refreshing">正在刷新…</string>
@@ -24,5 +24,7 @@
     <string name="srl_footer_finish">加载完成</string>
     <string name="srl_footer_failed">加载失败</string>
     <string name="srl_footer_nothing">没有更多数据了</string>
+
+    <string name="back">返回</string>
 
 </resources>

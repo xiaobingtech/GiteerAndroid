@@ -15,4 +15,36 @@
 
     <color name="tabbar">#FFF4F4F4</color>
     <color name="gray">#FF999999</color>
+
+    <color name="grey_text">#999</color>
+    <color name="text_color">#333</color>
+    <color name="text_gray_color">#666</color>
+    <color name="grey_C9">#C9C9C9</color>
+    <!--    <color name="blue_text">#3165EC</color>-->
+    <color name="blue_text">#0A6D73</color>
+    <color name="grey_333">#333</color>
+    <color name="line_color">#D6D6D6</color>
+    <color name="bg_line_color">#F4F4F4</color>
+    <color name="bg_text_color">#f5f9ff</color>
+    <color name="star_color">#FF3838</color>
+    <color name="btn_register_color">#ced7de</color>
+    <color name="bottom_color">#3771FB</color>
+    <color name="qmui_bg">#F8F8F8</color>
+    <color name="grey">#E6E6E6</color>
+    <color name="base_msg_color">#171717</color>
+    <color name="empty_desc">#828282</color>
+    <color name="info_line_color">#E6E6E6</color>
+    <color name="warm_prompt">#2E2E2E</color>
+    <color name="warm_prompt_desc">#595959</color>
+    <color name="red_circular">#FF4C3F</color>
+    <color name="bg_time">#c1d5fe</color>
+    <color name="vertical_line">#DDD</color>
+    <color name="grey_dot">#E3E3E3</color>
+    <color name="grey_record">#C9C9C9</color>
+    <color name="grey_f9">#f9f9f9</color>
+    <color name="start_color">#5F9EF7</color>
+    <color name="blue_theme">#3771FB</color>
+    <color name="dot_color">#C1CCE6</color>
+    <color name="bg_introduce_color">#F6FBF7</color>
+    <color name="transparent">#00000000</color>
 </resources>

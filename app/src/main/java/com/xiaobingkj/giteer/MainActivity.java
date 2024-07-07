@@ -3,6 +3,8 @@ package com.xiaobingkj.giteer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,11 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.google.android.material.search.SearchBar;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.gyf.immersionbar.ImmersionBar;
-import com.xiaobingkj.giteer.databinding.ActivityLoginBinding;
 import com.xiaobingkj.giteer.databinding.ActivityMainBinding;
+import com.xiaobingkj.giteer.listener.LoginChangeListener;
 import com.xiaobingkj.giteer.singleton.Giteer;
 import com.xiaobingkj.giteer.ui.event.EventFragment;
 import com.xiaobingkj.giteer.ui.login.LoginActivity;
@@ -35,16 +35,14 @@ public class MainActivity extends AppCompatActivity implements LoginChangeListen
 
     private ActivityMainBinding binding;
 
-
+    // 用来计算返回键的点击间隔时间
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        ImmersionBar.with(this)
-                .init();
 
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -114,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements LoginChangeListen
         Giteer.getInstance().setToken("{\"access_token\":\"\"}");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private static class ViewPageAdapter extends FragmentStateAdapter {
@@ -152,5 +151,18 @@ public class MainActivity extends AppCompatActivity implements LoginChangeListen
             }
 
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

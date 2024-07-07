@@ -1,21 +1,32 @@
 package com.xiaobingkj.giteer.ui.webview;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static com.xiaobingkj.giteer.singleton.Giteer.getInstance;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
-import com.gyf.immersionbar.ImmersionBar;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import com.xiaobingkj.giteer.MainActivity;
 import com.xiaobingkj.giteer.R;
+import com.xiaobingkj.giteer.constant.Constants;
 import com.xiaobingkj.giteer.databinding.ActivityWebViewBinding;
 import com.xiaobingkj.giteer.entry.OAuthEntry;
 import com.xiaobingkj.giteer.entry.UserEntry;
 import com.xiaobingkj.giteer.singleton.Giteer;
+import com.xiaobingkj.giteer.ui.login.LoginActivity;
+import com.xiaobingkj.giteer.utils.QMUIUtils;
 
 import rxhttp.RxHttp;
 
@@ -32,17 +43,15 @@ public class WebViewActivity extends AppCompatActivity {
         binding = ActivityWebViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ImmersionBar.with(this)
-                .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .init();
+        QMUIUtils.showToolBar(binding.topbar, new QMUIUtils.QmBackOnclickListener() {
+            @Override
+            public void onBackClick() {
+                finish();
+            }
+        }, this, "");
 
-        String client_id = "";
-        String client_secret = "";
-        String redirect_uri = "";
+        String url = getIntent().getStringExtra("url");
 
-        String url = "https://gitee.com/oauth/authorize?client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&response_type=code";
-        Log.d(TAG, "打开URL:"+url);
         binding.webview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, WebResourceRequest webResourceRequest) {
@@ -55,19 +64,21 @@ public class WebViewActivity extends AppCompatActivity {
                     String code = strings[strings.length - 1];
                     RxHttp.postJson("oauth/token")
                             .add("code", code)
-                            .add("client_id", client_id)
-                            .add("client_secret", client_secret)
-                            .add("redirect_uri", redirect_uri)
+                            .add("client_id", Constants.client_id)
+                            .add("client_secret", Constants.client_secret)
+                            .add("redirect_uri", Constants.redirect_uri)
                             .add("grant_type", "authorization_code")
                             .toObservable(OAuthEntry.class)
                             .subscribe( s -> {
                                 String token = s.getAccess_token();
                                 Log.d(TAG, "最新Token:" + token);
-                                Giteer.getInstance().setToken(new Gson().toJson(s));
+                                getInstance().setToken(new Gson().toJson(s));
                                 RxHttp.get("api/v5/user")
                                         .toObservableString()
                                         .subscribe( s2 -> {
-                                            Giteer.getInstance().setUser(s2);
+                                            getInstance().setUser(s2);
+                                            Intent intent = new Intent(WebViewActivity.this, MainActivity.class);
+                                            startActivity(intent);
                                             finish();
                                         }, throwable -> {
 

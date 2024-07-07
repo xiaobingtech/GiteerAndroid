@@ -3,21 +3,23 @@ package com.xiaobingkj.giteer.ui.login;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gyf.immersionbar.ImmersionBar;
+import com.xiaobingkj.giteer.BaseActivity;
 import com.xiaobingkj.giteer.R;
+import com.xiaobingkj.giteer.constant.Constants;
 import com.xiaobingkj.giteer.databinding.ActivityLoginBinding;
 import com.xiaobingkj.giteer.singleton.Giteer;
 import com.xiaobingkj.giteer.ui.webview.WebViewActivity;
 
 import rxhttp.RxHttp;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     public static final String TAG = "LoginActivity";
 
@@ -29,16 +31,18 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ImmersionBar.with(this)
-                .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .init();
-
         binding.oauthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                String url = "https://gitee.com/oauth/authorize?client_id=" + Constants.client_id + "&redirect_uri=" + Constants.redirect_uri + "&response_type=code";
+                Log.d(TAG, "打开URL:"+url);
+
                 Intent intent = new Intent(LoginActivity.this, WebViewActivity.class);
+                intent.putExtra("url", url);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -48,12 +52,12 @@ public class LoginActivity extends AppCompatActivity {
                 final EditText input = new EditText(LoginActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 builder.setTitle("");
-                builder.setMessage("Privacy statement: giteer will not collect any information from your gitee account. Please rest assured, use loginButton to get info from private repository");
+                builder.setMessage("隐私声明：Giteer不会从您的Gitee账号收集任何信息，请您放心使用，如果需要访问私有仓库请点击底部登录按钮进行OAuth授权");
 
                 builder.setView(input);
 
                 // 设置肯定按钮
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 点击确认按钮的操作
@@ -75,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
                 // 设置否定按钮
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 点击取消按钮的操作

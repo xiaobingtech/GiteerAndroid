@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xiaobingkj.giteer.R;
-import com.xiaobingkj.giteer.TokenChangeListener;
+import com.xiaobingkj.giteer.listener.TokenChangeListener;
 
 /**
  * A simple {@link Fragment} subclass.

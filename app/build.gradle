@@ -80,9 +80,11 @@ dependencies {
     implementation  'io.github.scwang90:refresh-footer-classics:2.1.0'    //经典加载
     implementation  'io.github.scwang90:refresh-header-material:2.1.0'    //谷歌刷新头
 
-    //状态栏
-    implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
-
     //Adapter
     implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper4:4.1.4"
+
+    //腾讯的QMUI
+    implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
+    implementation "com.qmuiteam:arch:2.0.0-alpha10"
+    annotationProcessor "com.qmuiteam:arch-compiler:2.0.0-alpha10"
 }

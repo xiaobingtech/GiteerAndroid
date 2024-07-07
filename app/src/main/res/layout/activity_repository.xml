@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        
-        
         <com.qmuiteam.qmui.widget.QMUITopBar
             android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"></com.qmuiteam.qmui.widget.QMUITopBar>
-
-        <com.tencent.smtt.sdk.WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.tencent.smtt.sdk.WebView>
-
     </LinearLayout>
 </layout>

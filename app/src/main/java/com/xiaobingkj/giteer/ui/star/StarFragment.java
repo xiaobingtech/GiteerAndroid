@@ -1,7 +1,9 @@
 package com.xiaobingkj.giteer.ui.star;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,21 +14,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chad.library.adapter4.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaobingkj.giteer.R;
-import com.xiaobingkj.giteer.TokenChangeListener;
+import com.xiaobingkj.giteer.listener.TokenChangeListener;
 import com.xiaobingkj.giteer.databinding.FragmentStarBinding;
 import com.xiaobingkj.giteer.entry.ApiException;
 import com.xiaobingkj.giteer.entry.ErrorResponse;
 import com.xiaobingkj.giteer.entry.StarEntry;
 import com.xiaobingkj.giteer.singleton.Giteer;
+import com.xiaobingkj.giteer.ui.repository.RepositoryActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -42,7 +44,6 @@ public class StarFragment extends Fragment implements TokenChangeListener {
 
     private FragmentStarBinding binding;
     private Integer page = 1;
-    private List<StarEntry> models;
     private StarListAdapter adapter;
 
     @Override
@@ -72,6 +73,16 @@ public class StarFragment extends Fragment implements TokenChangeListener {
                 footerRefresh();
             }
 
+        });
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener<StarEntry>() {
+            @Override
+            public void onClick(@NonNull BaseQuickAdapter<StarEntry, ?> baseQuickAdapter, @NonNull View view, int i) {
+//                Toast.makeText(getActivity(), "点击了" + i, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), RepositoryActivity.class);
+                intent.putExtra("model", adapter.getItems().get(i));
+                startActivity(intent);
+            }
         });
         return root;
 
