@@ -5,10 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.xiaobingkj.giteer.BaseActivity;
 import com.xiaobingkj.giteer.R;
@@ -31,6 +37,13 @@ public class LoginActivity extends BaseActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         binding.oauthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +55,6 @@ public class LoginActivity extends BaseActivity {
                 Intent intent = new Intent(LoginActivity.this, WebViewActivity.class);
                 intent.putExtra("url", url);
                 startActivity(intent);
-                finish();
             }
         });
 

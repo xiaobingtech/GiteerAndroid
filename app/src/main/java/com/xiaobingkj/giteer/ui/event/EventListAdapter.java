@@ -117,6 +117,7 @@ public class EventListAdapter extends BaseQuickAdapter<EventEntry, QuickViewHold
             commitIdTV.setVisibility(View.GONE);
             commitTitleTV.setVisibility(View.GONE);
         }
+        quickViewHolder.setText(R.id.time, eventEntry.getCreated_at());
     }
 
     @NonNull

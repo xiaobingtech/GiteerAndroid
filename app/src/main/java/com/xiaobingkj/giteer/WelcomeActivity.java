@@ -25,6 +25,14 @@ public class WelcomeActivity extends AppCompatActivity {
         binding = ActivityWelcomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.welcome), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+
         String token = Giteer.getInstance().getToken().getAccess_token();
         new Handler().postDelayed(() -> {
             if (token == null || token.length() == 0) {

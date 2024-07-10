@@ -43,6 +43,13 @@ public class WebViewActivity extends AppCompatActivity {
         binding = ActivityWebViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.web), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         QMUIUtils.showToolBar(binding.topbar, new QMUIUtils.QmBackOnclickListener() {
             @Override
             public void onBackClick() {
