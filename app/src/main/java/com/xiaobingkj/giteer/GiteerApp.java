@@ -3,6 +3,9 @@ package com.xiaobingkj.giteer;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.didichuxing.doraemonkit.DoKit;
 import com.tencent.mmkv.MMKV;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
@@ -16,6 +19,10 @@ public class GiteerApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        new DoKit.Builder(this).productId("a6a625226185f1bf55493f8f897c21f2").build();
 
         //初始化RxHttp
         RxHttpManager.init(this);

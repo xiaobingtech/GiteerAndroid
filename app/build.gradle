@@ -84,7 +84,15 @@ dependencies {
     implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper4:4.1.4"
 
     //腾讯的QMUI
-    implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
-    implementation "com.qmuiteam:arch:2.0.0-alpha10"
-    annotationProcessor "com.qmuiteam:arch-compiler:2.0.0-alpha10"
+    implementation 'com.qmuiteam:qmui:2.0.1'
+    implementation "com.qmuiteam:arch:2.0.1"
+    annotationProcessor "com.qmuiteam:arch-compiler:2.0.1"
+
+    //Utils
+    implementation 'com.blankj:utilcodex:1.31.1'
+
+    //DoKit
+    def lastversion = '3.5.0'
+    debugImplementation "io.github.didi.dokit:dokitx:${lastversion}"
+    releaseImplementation "io.github.didi.dokit:dokitx-no-op:${lastversion}"
 }
