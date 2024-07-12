@@ -16,6 +16,9 @@
     <color name="tabbar">#FFF4F4F4</color>
     <color name="gray">#FF999999</color>
 
+    <color name="bg_back">#FFFAFAFA</color>
+
+
     <color name="grey_text">#999</color>
     <color name="text_color">#333</color>
     <color name="text_gray_color">#666</color>
