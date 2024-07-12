@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements LoginChangeListen
                         adapter.eventFragment.onTokenChanged();
                         adapter.starFragment.onTokenChanged();
                         adapter.searchFragment.onTokenChanged();
-                        adapter.trendFragment.onTokenChanged();
                         adapter.meFragment.onTokenChanged();
                     }, throwable -> {
 

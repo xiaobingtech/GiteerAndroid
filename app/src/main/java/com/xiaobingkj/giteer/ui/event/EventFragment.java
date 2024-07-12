@@ -20,6 +20,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.xiaobingkj.giteer.MainActivity;
 import com.xiaobingkj.giteer.R;
 import com.xiaobingkj.giteer.listener.TokenChangeListener;
 import com.xiaobingkj.giteer.databinding.FragmentEventBinding;
@@ -165,7 +166,8 @@ public class EventFragment extends Fragment implements TokenChangeListener {
 //                        Toast.makeText(getActivity(), apiException.getMessage(), Toast.LENGTH_SHORT).show();
                         int statusCode = apiException.getStatusCode();
                         if (statusCode == 401) {
-
+                            MainActivity activity = (MainActivity) getActivity();
+                            activity.logout();
                         }
                     }else{
                         Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();

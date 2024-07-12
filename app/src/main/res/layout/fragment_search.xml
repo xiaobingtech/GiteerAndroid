@@ -5,6 +5,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_left"
+            android:layout_marginEnd="@dimen/margin_right"
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginBottom="@dimen/margin_bottom"
+            android:background="@color/white"
+            android:drawableStart="@mipmap/icon_search"
+            android:drawablePadding="@dimen/margin_top"
+            android:hint="@string/search_placeholder"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColorHint="@color/grey_text"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </layout>

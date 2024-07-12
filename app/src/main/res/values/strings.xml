@@ -27,4 +27,10 @@
 
     <string name="back">返回</string>
 
+    <string name="search_placeholder">请输入搜索内容</string>
+
+    <string name="trend_recommend">推荐</string>
+    <string name="trend_hot">热门</string>
+    <string name="trend_latest">最近更新</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.xiaobingkj.giteer.ui.star;
+package com.xiaobingkj.giteer.ui.trend;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,13 +22,15 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xiaobingkj.giteer.MainActivity;
 import com.xiaobingkj.giteer.R;
-import com.xiaobingkj.giteer.listener.TokenChangeListener;
-import com.xiaobingkj.giteer.databinding.FragmentStarBinding;
+import com.xiaobingkj.giteer.databinding.FragmentTrendSubBinding;
 import com.xiaobingkj.giteer.entry.ApiException;
 import com.xiaobingkj.giteer.entry.ErrorResponse;
 import com.xiaobingkj.giteer.entry.StarEntry;
+import com.xiaobingkj.giteer.entry.TrendSubEntry;
+import com.xiaobingkj.giteer.entry.TrendSubEntryOwner;
 import com.xiaobingkj.giteer.singleton.Giteer;
 import com.xiaobingkj.giteer.ui.repository.RepositoryActivity;
+import com.xiaobingkj.giteer.ui.star.StarListAdapter;
 
 import java.util.List;
 
@@ -39,28 +41,64 @@ import kotlin.ranges.IntRange;
 import rxhttp.RxHttp;
 import rxhttp.wrapper.exception.HttpStatusCodeException;
 
-public class StarFragment extends Fragment implements TokenChangeListener {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link TrendSubFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class TrendSubFragment extends Fragment {
 
-    public static final String TAG = "StarFragment";
+    public static final String TAG = "TrendSubFragment";
 
-    private FragmentStarBinding binding;
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "url";
+
+    // TODO: Rename and change types of parameters
+    private String final_url;
+
+    private FragmentTrendSubBinding binding;
+
     private Integer page = 1;
-    private StarListAdapter adapter;
+    private TrendSubListAdapter adapter;
+
+    public TrendSubFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment TrendSubFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static TrendSubFragment newInstance(String url) {
+        TrendSubFragment fragment = new TrendSubFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, url);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            final_url = "api/v3/projects/" + getArguments().getString(ARG_PARAM1);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_star, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_trend_sub, container, false);
         View root = binding.getRoot();
 
         binding.listView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        adapter = new StarListAdapter();
+        adapter = new TrendSubListAdapter();
         binding.listView.setAdapter(adapter);
 
         binding.refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -76,18 +114,19 @@ public class StarFragment extends Fragment implements TokenChangeListener {
 
         });
 
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener<StarEntry>() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener<TrendSubEntry>() {
             @Override
-            public void onClick(@NonNull BaseQuickAdapter<StarEntry, ?> baseQuickAdapter, @NonNull View view, int i) {
+            public void onClick(@NonNull BaseQuickAdapter<TrendSubEntry, ?> baseQuickAdapter, @NonNull View view, int i) {
 //                Toast.makeText(getActivity(), "点击了" + i, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), RepositoryActivity.class);
                 intent.putExtra("model", adapter.getItems().get(i));
                 startActivity(intent);
             }
         });
-        return root;
 
+        return root;
     }
+
 
     @Override
     public void onResume() {
@@ -109,16 +148,13 @@ public class StarFragment extends Fragment implements TokenChangeListener {
     public void requestData() {
         Log.d(TAG, "当前页:"+page);
         //        https://gitee.com/api/v5/users/fandongtongxue_admin/starred?access_token=8b54574d49a35d59fcbff25c54d3e934&limit=20&sort=created&direction=desc
-        RxHttp.get("api/v5/users/" + Giteer.getInstance().getUser().getLogin() + "/starred")
-                .add("limit", 100)
-                .add("sort", "created")
-                .add("direction", "desc")
+        RxHttp.get(final_url)
                 .add("page", page)
                 .toObservableString()
                 .observeOn(Schedulers.io())
                 .flatMap(response -> {
                     try {
-                        List<StarEntry> starList = new Gson().fromJson(response, new TypeToken<List<StarEntry>>(){}.getType());
+                        List<TrendSubEntry> starList = new Gson().fromJson(response, new TypeToken<List<TrendSubEntry>>(){}.getType());
                         return Observable.just(starList);
                     }catch (JsonSyntaxException e) {
                         try {
@@ -141,7 +177,7 @@ public class StarFragment extends Fragment implements TokenChangeListener {
                         adapter.addAll(s);
                     }
                     adapter.notifyDataSetChanged();
-                    if (s.size() < 100) {
+                    if (s.size() < 20) {
                         binding.refreshLayout.finishLoadMoreWithNoMoreData();
                     } else {
                         binding.refreshLayout.finishLoadMore(0);
@@ -170,8 +206,4 @@ public class StarFragment extends Fragment implements TokenChangeListener {
         binding = null;
     }
 
-    @Override
-    public void onTokenChanged() {
-        headerRefresh();
-    }
 }
