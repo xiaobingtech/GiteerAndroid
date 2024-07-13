@@ -20,13 +20,20 @@ import com.xiaobingkj.giteer.entry.StarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.carbs.android.avatarimageview.library.AvatarImageView;
+
 public class StarListAdapter extends BaseQuickAdapter<StarEntry, QuickViewHolder> {
 
     @Override
     protected void onBindViewHolder(@NonNull QuickViewHolder quickViewHolder, int i, @Nullable StarEntry starEntry) {
         assert starEntry != null;
-        ImageView avatar = quickViewHolder.getView(R.id.avatar);
-        Glide.with(quickViewHolder.itemView).load(starEntry.getOwner().getAvatar_url()).into(avatar);
+        AvatarImageView avatar = quickViewHolder.getView(R.id.avatar);
+        if (starEntry.getOwner().getAvatar_url().equals("https://gitee.com/assets/no_portrait.png")) {
+            avatar.setTextAndColor(starEntry.getOwner().getName().substring(0, 1), R.color.gray);
+        }else{
+            Glide.with(quickViewHolder.itemView).load(starEntry.getOwner().getAvatar_url()).into(avatar);
+        }
+
         quickViewHolder.setText(R.id.name, starEntry.getHuman_name());
         quickViewHolder.setText(R.id.desc, starEntry.getDescription());
         quickViewHolder.setText(R.id.time, starEntry.getUpdated_at());

@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
         android:id="@+id/avatar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="@dimen/margin_left"
         android:layout_marginTop="@dimen/margin_top"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageView>
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitCenter">
+    </cn.carbs.android.avatarimageview.library.AvatarImageView>
 
     <TextView
         android:id="@+id/name"

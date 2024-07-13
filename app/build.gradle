@@ -96,4 +96,7 @@ dependencies {
     debugImplementation "io.github.didi.dokit:dokitx:${lastversion}"
     releaseImplementation "io.github.didi.dokit:dokitx-no-op:${lastversion}"
 
+    //头像
+    implementation 'cn.carbs.android:AvatarImageView:1.0.3'
+
 }
