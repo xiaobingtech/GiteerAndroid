@@ -119,7 +119,7 @@ public class TrendSubFragment extends Fragment {
             public void onClick(@NonNull BaseQuickAdapter<TrendSubEntry, ?> baseQuickAdapter, @NonNull View view, int i) {
 //                Toast.makeText(getActivity(), "点击了" + i, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), RepositoryActivity.class);
-                intent.putExtra("model", adapter.getItems().get(i));
+                intent.putExtra("v3model", adapter.getItems().get(i));
                 startActivity(intent);
             }
         });

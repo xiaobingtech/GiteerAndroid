@@ -12,6 +12,7 @@ import com.xiaobingkj.giteer.R;
 import com.xiaobingkj.giteer.databinding.ActivityRepositoryBinding;
 import com.xiaobingkj.giteer.databinding.ActivityWebViewBinding;
 import com.xiaobingkj.giteer.entry.StarEntry;
+import com.xiaobingkj.giteer.entry.TrendSubEntry;
 import com.xiaobingkj.giteer.utils.QMUIUtils;
 
 public class RepositoryActivity extends AppCompatActivity {
@@ -34,7 +35,12 @@ public class RepositoryActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             StarEntry entry = getIntent().getSerializableExtra("model", StarEntry.class);
-            name = entry.getHuman_name();
+            if (entry == null) {
+                TrendSubEntry subEntry = getIntent().getSerializableExtra("v3model", TrendSubEntry.class);
+                name = subEntry.getName_with_namespace();
+            }else{
+                name = entry.getHuman_name();
+            }
         }
 
         QMUIUtils.showToolBar(binding.topbar, new QMUIUtils.QmBackOnclickListener() {
