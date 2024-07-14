@@ -24,12 +24,14 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+import cn.carbs.android.avatarimageview.library.AvatarImageView;
+
 public class MeAdapter extends BaseMultiItemAdapter<MeEntry> {
 
     public static class MeTopVH extends RecyclerView.ViewHolder {
         private ItemMeTopBinding viewBinding;
 
-        private ImageView avatar;
+        private AvatarImageView avatar;
         private TextView nameTV;
         private TextView descTV;
         private TextView timeTV;
@@ -68,7 +70,12 @@ public class MeAdapter extends BaseMultiItemAdapter<MeEntry> {
                 viewHolder.nameTV.setText(meEntry.getName() + "("  + meEntry.getLogin()+ ")");
                 viewHolder.descTV.setText(meEntry.getBio());
                 viewHolder.timeTV.setText("加入于"+meEntry.getCreated_at());
-                Glide.with(viewHolder.itemView).load(meEntry.getAvatar_url()).into(viewHolder.avatar);
+                AvatarImageView avatar = viewHolder.avatar;
+                if (meEntry.getAvatar_url().equals("https://gitee.com/assets/no_portrait.png")) {
+                    avatar.setTextAndColor(meEntry.getName().substring(0, 1), R.color.gray);
+                }else{
+                    Glide.with(viewHolder.itemView).load(meEntry.getAvatar_url()).into(avatar);
+                }
             }
         }).addItemType(ME_LIST_TYPE, new OnMultiItemAdapterListener<MeEntry, MeListVH>() {
             @NonNull

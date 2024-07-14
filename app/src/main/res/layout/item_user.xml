@@ -25,7 +25,6 @@
         android:layout_marginStart="@dimen/margin_left"
         android:layout_marginTop="@dimen/margin_top"
         android:layout_marginEnd="@dimen/margin_right"
-        android:text="fandongtongxue/Giteer"
         android:textSize="@dimen/primary_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/avatar"

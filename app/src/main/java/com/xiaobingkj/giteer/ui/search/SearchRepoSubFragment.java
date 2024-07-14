@@ -113,7 +113,7 @@ public class SearchRepoSubFragment extends Fragment implements SearchKeyChangeLi
         RxHttp.get("api/v5/search/repositories")
                 .add("page", page)
                 .add("q",key)
-                .add("perpage", 100)
+                .add("perpage", 20)
                 .add("order", "desc")
                 .add("sort", "stars_count")
                 .toObservableString()
@@ -143,7 +143,7 @@ public class SearchRepoSubFragment extends Fragment implements SearchKeyChangeLi
                         adapter.addAll(s);
                     }
                     adapter.notifyDataSetChanged();
-                    if (s.size() < 100) {
+                    if (s.size() < 20) {
                         binding.refreshLayout.finishLoadMoreWithNoMoreData();
                     } else {
                         binding.refreshLayout.finishLoadMore(0);

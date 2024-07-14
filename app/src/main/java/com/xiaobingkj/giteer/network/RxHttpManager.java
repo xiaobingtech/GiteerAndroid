@@ -27,7 +27,7 @@ public class RxHttpManager {
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(new CookieStore(file))
-                .connectTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager) //添加信任证书
