@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements LoginChangeListen
                         ViewPageAdapter adapter = (ViewPageAdapter) binding.viewPager.getAdapter();
                         adapter.eventFragment.onTokenChanged();
                         adapter.starFragment.onTokenChanged();
-                        adapter.searchFragment.onTokenChanged();
                         adapter.meFragment.onTokenChanged();
                     }, throwable -> {
 

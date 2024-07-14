@@ -70,8 +70,7 @@ public class MeFragment extends Fragment implements TokenChangeListener {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener<MeEntry>() {
             @Override
             public void onClick(@NonNull BaseQuickAdapter<MeEntry, ?> baseQuickAdapter, @NonNull View view, int i) {
-                MainActivity activity = (MainActivity) getActivity();
-                activity.logout();
+
             }
         });
 

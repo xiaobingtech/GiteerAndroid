@@ -33,4 +33,7 @@
     <string name="trend_hot">热门</string>
     <string name="trend_latest">最近更新</string>
 
+    <string name="search_repo">仓库</string>
+    <string name="search_user">用户</string>
+
 </resources>
