@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
@@ -16,7 +14,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.xiaobingkj.giteer.BaseActivity;
 import com.xiaobingkj.giteer.R;
 import com.xiaobingkj.giteer.constant.Constants;
 import com.xiaobingkj.giteer.databinding.ActivityLoginBinding;
@@ -25,7 +22,7 @@ import com.xiaobingkj.giteer.ui.webview.WebViewActivity;
 
 import rxhttp.RxHttp;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
 

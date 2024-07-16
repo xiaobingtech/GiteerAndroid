@@ -1,7 +1,9 @@
 package com.xiaobingkj.giteer.ui.repository;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spanned;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +35,7 @@ public class RepositoryActivity extends AppCompatActivity {
 
     private ActivityRepositoryBinding binding;
     private String name;
+    private String fullName;
     private String ref = "main";
 
     @Override
@@ -53,6 +56,7 @@ public class RepositoryActivity extends AppCompatActivity {
             if (entry == null) {
                 TrendSubEntry subEntry = getIntent().getSerializableExtra("v3model", TrendSubEntry.class);
                 name = subEntry.getName_with_namespace();
+                fullName = subEntry.getPath_with_namespace();
                 ref = subEntry.getDefault_branch();
                 AvatarImageView avatar = binding.avatar;
                 if (subEntry.getOwner().getPortrait_url().contains("no_portrait.png")) {
@@ -66,6 +70,7 @@ public class RepositoryActivity extends AppCompatActivity {
                 refreshReadMe(subEntry.getPath_with_namespace());
             }else{
                 name = entry.getHuman_name();
+                fullName = entry.getFull_name();
                 ref = entry.getDefault_branch();
                 AvatarImageView avatar = binding.avatar;
                 if (entry.getOwner().getAvatar_url().equals("https://gitee.com/assets/no_portrait.png")) {
@@ -76,7 +81,7 @@ public class RepositoryActivity extends AppCompatActivity {
                 binding.name.setText(name);
                 binding.desc.setText(entry.getDescription());
                 binding.time.setText(entry.getUpdated_at());
-                refreshReadMe(entry.getHuman_name());
+                refreshReadMe(entry.getFull_name());
             }
 
 
@@ -91,6 +96,17 @@ public class RepositoryActivity extends AppCompatActivity {
                 finish();
             }
         }, this, name);
+
+        binding.viewClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RepositoryActivity.this, RepositoryTreeActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("fullName", fullName);
+                intent.putExtra("ref", ref);
+                startActivity(intent);
+            }
+        });
     }
 
     void refreshReadMe(String name) {

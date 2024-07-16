@@ -20,6 +20,9 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
+            android:name=".ui.repository.RepositoryTreeActivity"
+            android:exported="false" />
+        <activity
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
@@ -43,7 +46,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity> <!-- 表示当前项目已经适配了分区存储特性 -->
+            android:exported="false" /> <!-- 表示当前项目已经适配了分区存储特性 -->
         <meta-data
             android:name="ScopedStorage"
             android:value="true" /> <!-- OPPO -->
