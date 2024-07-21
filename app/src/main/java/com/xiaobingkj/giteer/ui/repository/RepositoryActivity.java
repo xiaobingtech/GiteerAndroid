@@ -51,43 +51,36 @@ public class RepositoryActivity extends AppCompatActivity {
             return insets;
         });
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            StarEntry entry = getIntent().getSerializableExtra("model", StarEntry.class);
-            if (entry == null) {
-                TrendSubEntry subEntry = getIntent().getSerializableExtra("v3model", TrendSubEntry.class);
-                name = subEntry.getName_with_namespace();
-                fullName = subEntry.getPath_with_namespace();
-                ref = subEntry.getDefault_branch();
-                AvatarImageView avatar = binding.avatar;
-                if (subEntry.getOwner().getPortrait_url().contains("no_portrait.png")) {
-                    avatar.setTextAndColor(subEntry.getOwner().getName().substring(0, 1), R.color.gray);
-                }else{
-                    Glide.with(this).load(subEntry.getOwner().getPortrait_url()).into(avatar);
-                }
-                binding.name.setText(name);
-                binding.desc.setText(subEntry.getDescription());
-                binding.time.setText(subEntry.getLast_push_at());
-                refreshReadMe(subEntry.getPath_with_namespace());
+        StarEntry entry = (StarEntry)getIntent().getSerializableExtra("model");
+        if (entry == null) {
+            TrendSubEntry subEntry = (TrendSubEntry)getIntent().getSerializableExtra("v3model");
+            name = subEntry.getName_with_namespace();
+            fullName = subEntry.getPath_with_namespace();
+            ref = subEntry.getDefault_branch();
+            AvatarImageView avatar = binding.avatar;
+            if (subEntry.getOwner().getPortrait_url().contains("no_portrait.png")) {
+                avatar.setTextAndColor(subEntry.getOwner().getName().substring(0, 1), R.color.gray);
             }else{
-                name = entry.getHuman_name();
-                fullName = entry.getFull_name();
-                ref = entry.getDefault_branch();
-                AvatarImageView avatar = binding.avatar;
-                if (entry.getOwner().getAvatar_url().equals("https://gitee.com/assets/no_portrait.png")) {
-                    avatar.setTextAndColor(entry.getOwner().getName().substring(0, 1), R.color.gray);
-                }else{
-                    Glide.with(this).load(entry.getOwner().getAvatar_url()).into(avatar);
-                }
-                binding.name.setText(name);
-                binding.desc.setText(entry.getDescription());
-                binding.time.setText(entry.getUpdated_at());
-                refreshReadMe(entry.getFull_name());
+                Glide.with(this).load(subEntry.getOwner().getPortrait_url()).into(avatar);
             }
-
-
-
+            binding.name.setText(name);
+            binding.desc.setText(subEntry.getDescription());
+            binding.time.setText(subEntry.getLast_push_at());
+            refreshReadMe(subEntry.getPath_with_namespace());
         }else{
-
+            name = entry.getHuman_name();
+            fullName = entry.getFull_name();
+            ref = entry.getDefault_branch();
+            AvatarImageView avatar = binding.avatar;
+            if (entry.getOwner().getAvatar_url().equals("https://gitee.com/assets/no_portrait.png")) {
+                avatar.setTextAndColor(entry.getOwner().getName().substring(0, 1), R.color.gray);
+            }else{
+                Glide.with(this).load(entry.getOwner().getAvatar_url()).into(avatar);
+            }
+            binding.name.setText(name);
+            binding.desc.setText(entry.getDescription());
+            binding.time.setText(entry.getUpdated_at());
+            refreshReadMe(entry.getFull_name());
         }
 
         QMUIUtils.showToolBar(binding.topbar, new QMUIUtils.QmBackOnclickListener() {
