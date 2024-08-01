@@ -49,11 +49,13 @@ public class IconTreeItemHolder extends TreeNode.BaseNodeViewHolder<IconTreeItem
         public int icon;
         public String name;
         public String path;
+        public String downloadUrl;
 
-        public IconTreeItem(int icon, String name, String path) {
+        public IconTreeItem(int icon, String name, String path, String downloadUrl) {
             this.icon = icon;
             this.name = name;
             this.path = path;
+            this.downloadUrl = downloadUrl;
         }
     }
 }

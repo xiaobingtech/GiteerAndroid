@@ -98,9 +98,9 @@ public class RepositoryTreeActivity extends AppCompatActivity {
                 .subscribe( s->{
                     for (RepoTreeEntry repoTreeEntry : s) {
                         if (repoTreeEntry.getType().equals("dir")) {
-                            tView.addNode(rootNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_folder, repoTreeEntry.getName(), repoTreeEntry.getPath())));
+                            tView.addNode(rootNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_folder, repoTreeEntry.getName(), repoTreeEntry.getPath(), repoTreeEntry.getDownload_url())));
                         }else{
-                            tView.addNode(rootNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_drive_file, repoTreeEntry.getName(), repoTreeEntry.getPath())));
+                            tView.addNode(rootNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_drive_file, repoTreeEntry.getName(), repoTreeEntry.getPath(), repoTreeEntry.getDownload_url())));
                         }
                     }
                 });
@@ -115,9 +115,9 @@ public class RepositoryTreeActivity extends AppCompatActivity {
                     .subscribe( s->{
                         for (RepoTreeEntry repoTreeEntry : s) {
                             if (repoTreeEntry.getType().equals("dir")) {
-                                tView.addNode(currentNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_folder, repoTreeEntry.getName(), repoTreeEntry.getPath())));
+                                tView.addNode(currentNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_folder, repoTreeEntry.getName(), repoTreeEntry.getPath(), repoTreeEntry.getDownload_url())));
                             }else{
-                                tView.addNode(currentNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_drive_file, repoTreeEntry.getName(), repoTreeEntry.getPath())));
+                                tView.addNode(currentNode, new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_drive_file, repoTreeEntry.getName(), repoTreeEntry.getPath(), repoTreeEntry.getDownload_url())));
                             }
                             currentNode.setExpanded(true);
                         }
@@ -136,7 +136,9 @@ public class RepositoryTreeActivity extends AppCompatActivity {
                 requestFoldData(item.path, node);
             }else{
                 //打开这个文件
-                startActivity(new Intent(RepositoryTreeActivity.this, CodeActivity.class));
+                Intent intent = new Intent(RepositoryTreeActivity.this, CodeActivity.class);
+                intent.putExtra("url", item.downloadUrl);
+                startActivity(intent);
             }
         }
     };

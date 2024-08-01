@@ -11,9 +11,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.xiaobingkj.giteer.R;
 import com.xiaobingkj.giteer.databinding.ActivityCodeBinding;
+import com.xiaobingkj.giteer.entry.ReadMeEntry;
 import com.xiaobingkj.giteer.utils.QMUIUtils;
 
 import io.github.rosemoe.sora.widget.CodeEditor;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import rxhttp.RxHttp;
 
 public class CodeActivity extends AppCompatActivity {
 
@@ -40,7 +43,14 @@ public class CodeActivity extends AppCompatActivity {
             }
         }, this, "文件详情");
 
-        binding.editor.setText("Hello world");
+        String url = getIntent().getStringExtra("url");
+
+        RxHttp.get(url)
+                .toObservableString()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    binding.editor.setText(s);
+                });
         binding.editor.setTypefaceText(Typeface.MONOSPACE); // 使用Monospace字体
         binding.editor.setNonPrintablePaintingFlags(
                 CodeEditor.FLAG_DRAW_WHITESPACE_LEADING | CodeEditor.FLAG_DRAW_LINE_SEPARATOR | CodeEditor.FLAG_DRAW_WHITESPACE_IN_SELECTION); // Show Non-Printable Characters
