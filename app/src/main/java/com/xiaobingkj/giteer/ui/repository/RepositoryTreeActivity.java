@@ -1,5 +1,6 @@
 package com.xiaobingkj.giteer.ui.repository;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -135,6 +136,7 @@ public class RepositoryTreeActivity extends AppCompatActivity {
                 requestFoldData(item.path, node);
             }else{
                 //打开这个文件
+                startActivity(new Intent(RepositoryTreeActivity.this, CodeActivity.class));
             }
         }
     };

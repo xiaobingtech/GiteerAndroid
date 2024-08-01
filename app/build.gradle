@@ -33,8 +33,9 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
     }
 
     buildFeatures {
@@ -108,5 +109,12 @@ dependencies {
     //Tree
     implementation 'com.github.bmelnychuk:atv:1.2.+'
     implementation 'com.github.johnkil.print:print:1.3.1'
+
+    //CodeEdit
+    implementation(platform("io.github.Rosemoe.sora-editor:bom:0.23.2"))
+    implementation 'io.github.Rosemoe.sora-editor:editor'
+    implementation 'io.github.Rosemoe.sora-editor:language-textmate'
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
 }
