@@ -20,6 +20,9 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
+            android:name=".ui.code.MainCodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.repository.CodeActivity"
             android:exported="false" />
         <activity

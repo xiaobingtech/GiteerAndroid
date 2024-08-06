@@ -21,6 +21,7 @@ import com.xiaobingkj.giteer.databinding.ActivityRepositoryBinding;
 import com.xiaobingkj.giteer.databinding.ActivityRepositoryTreeBinding;
 import com.xiaobingkj.giteer.entry.ReadMeEntry;
 import com.xiaobingkj.giteer.entry.RepoTreeEntry;
+import com.xiaobingkj.giteer.ui.code.MainCodeActivity;
 import com.xiaobingkj.giteer.utils.QMUIUtils;
 
 import java.util.ArrayList;
@@ -136,9 +137,11 @@ public class RepositoryTreeActivity extends AppCompatActivity {
                 requestFoldData(item.path, node);
             }else{
                 //打开这个文件
-                Intent intent = new Intent(RepositoryTreeActivity.this, CodeActivity.class);
-                intent.putExtra("url", item.downloadUrl);
-                startActivity(intent);
+//                Intent intent = new Intent(RepositoryTreeActivity.this, CodeActivity.class);
+//                intent.putExtra("url", item.downloadUrl);
+//                startActivity(intent);
+
+                startActivity(new Intent(RepositoryTreeActivity.this, MainCodeActivity.class));
             }
         }
     };

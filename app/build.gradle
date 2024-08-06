@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -111,10 +112,16 @@ dependencies {
     implementation 'com.github.johnkil.print:print:1.3.1'
 
     //CodeEdit
-    implementation(platform("io.github.Rosemoe.sora-editor:bom:0.23.2"))
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation(platform("io.github.Rosemoe.sora-editor:bom:0.23.4"))
     implementation 'io.github.Rosemoe.sora-editor:editor'
+    implementation 'io.github.Rosemoe.sora-editor:editor-lsp'
+    implementation 'io.github.Rosemoe.sora-editor:language-java'
     implementation 'io.github.Rosemoe.sora-editor:language-textmate'
-
+    implementation 'io.github.Rosemoe.sora-editor:language-treesitter'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    implementation 'com.itsaky.androidide.treesitter:tree-sitter-java:4.1.0'
+    implementation 'org.eclipse.lsp4j:org.eclipse.lsp4j:0.22.0'
+    implementation 'com.android.tools:desugar_jdk_libs:2.0.4'
 
 }
