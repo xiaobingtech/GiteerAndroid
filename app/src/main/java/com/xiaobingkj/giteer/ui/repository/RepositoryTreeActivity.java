@@ -21,12 +21,13 @@ import com.xiaobingkj.giteer.databinding.ActivityRepositoryBinding;
 import com.xiaobingkj.giteer.databinding.ActivityRepositoryTreeBinding;
 import com.xiaobingkj.giteer.entry.ReadMeEntry;
 import com.xiaobingkj.giteer.entry.RepoTreeEntry;
-import com.xiaobingkj.giteer.ui.code.MainCodeActivity;
 import com.xiaobingkj.giteer.utils.QMUIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cc.shinichi.library.ImagePreview;
+import cc.shinichi.library.bean.ImageInfo;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import rxhttp.RxHttp;
 
@@ -136,12 +137,46 @@ public class RepositoryTreeActivity extends AppCompatActivity {
             if (item.icon == R.string.ic_folder) {
                 requestFoldData(item.path, node);
             }else{
-                //打开这个文件
-//                Intent intent = new Intent(RepositoryTreeActivity.this, CodeActivity.class);
-//                intent.putExtra("url", item.downloadUrl);
-//                startActivity(intent);
+                if (item.path.endsWith("jpg") || item.path.endsWith("jpeg") || item.path.endsWith("png") || item.path.endsWith("webp") || item.path.endsWith("gif")) {
+                    //查看图片
+                    ImageInfo imageInfo;
+                    final List<ImageInfo> imageInfoList = new ArrayList<>();
+                    imageInfo = new ImageInfo();
+                    imageInfo.setOriginUrl(item.downloadUrl);// 原图url
+                    imageInfo.setThumbnailUrl(item.downloadUrl);// 缩略图url
+                    imageInfoList.add(imageInfo);
 
-                startActivity(new Intent(RepositoryTreeActivity.this, MainCodeActivity.class));
+                    ImagePreview
+                            .getInstance()
+                            // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好；
+                            .setContext(RepositoryTreeActivity.this)
+
+                            // 设置从第几张开始看（索引从0开始）
+                            .setIndex(0)
+
+                            //=================================================================================================
+                            // 有三种设置数据集合的方式，根据自己的需求进行三选一：
+                            // 1：第一步生成的imageInfo List
+                            .setImageInfoList(imageInfoList)
+
+                            // 2：直接传url List
+                            //.setImageList(List<String> imageList)
+
+                            // 3：只有一张图片的情况，可以直接传入这张图片的url
+                            //.setImage(String image)
+                            //=================================================================================================
+
+                            // 开启预览
+                            .start();
+                }else if(item.path.endsWith("mp4")){
+                    //查看视频
+                }else{
+                    //打开这个代码文件
+                    Intent intent = new Intent(RepositoryTreeActivity.this, CodeActivity.class);
+                    intent.putExtra("url", item.downloadUrl);
+                    startActivity(intent);
+                }
+
             }
         }
     };
