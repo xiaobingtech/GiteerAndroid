@@ -14,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.blankj.utilcode.util.EncodeUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 import com.xiaobingkj.giteer.R;
@@ -137,13 +139,26 @@ public class RepositoryTreeActivity extends AppCompatActivity {
             if (item.icon == R.string.ic_folder) {
                 requestFoldData(item.path, node);
             }else{
+
+                String[] parts = item.downloadUrl.split("/");
+                String lastPart = parts[parts.length - 1];
+                String encodeUrl = EncodeUtils.urlEncode(lastPart);
+                parts[parts.length - 1] = encodeUrl;
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < parts.length; i++) {
+                    builder.append(parts[i]);
+                    if (i < parts.length - 1) {
+                        builder.append("/");
+                    }
+                }
+                String joinedString = builder.toString();
                 if (item.path.endsWith("jpg") || item.path.endsWith("jpeg") || item.path.endsWith("png") || item.path.endsWith("webp") || item.path.endsWith("gif")) {
                     //查看图片
                     ImageInfo imageInfo;
                     final List<ImageInfo> imageInfoList = new ArrayList<>();
                     imageInfo = new ImageInfo();
-                    imageInfo.setOriginUrl(item.downloadUrl);// 原图url
-                    imageInfo.setThumbnailUrl(item.downloadUrl);// 缩略图url
+                    imageInfo.setOriginUrl(joinedString);// 原图url
+                    imageInfo.setThumbnailUrl(joinedString);// 缩略图url
                     imageInfoList.add(imageInfo);
 
                     ImagePreview
@@ -170,10 +185,13 @@ public class RepositoryTreeActivity extends AppCompatActivity {
                             .start();
                 }else if(item.path.endsWith("mp4")){
                     //查看视频
+                    Intent intent = new Intent(RepositoryTreeActivity.this, VideoActivity.class);
+                    intent.putExtra("url", joinedString);
+                    startActivity(intent);
                 }else{
                     //打开这个代码文件
                     Intent intent = new Intent(RepositoryTreeActivity.this, CodeActivity.class);
-                    intent.putExtra("url", item.downloadUrl);
+                    intent.putExtra("url", joinedString);
                     startActivity(intent);
                 }
 

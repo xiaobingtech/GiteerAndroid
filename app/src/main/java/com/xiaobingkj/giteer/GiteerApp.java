@@ -14,6 +14,10 @@ import com.xiaobingkj.giteer.network.RxHttpManager;
 
 import java.util.HashMap;
 
+import xyz.doikki.videoplayer.exo.ExoMediaPlayerFactory;
+import xyz.doikki.videoplayer.player.VideoViewConfig;
+import xyz.doikki.videoplayer.player.VideoViewManager;
+
 public class GiteerApp extends Application {
     public static final String TAG = "GiteerApp";
     @Override
@@ -82,5 +86,10 @@ public class GiteerApp extends Application {
                 Log.d(TAG, "onViewInitFinished: " + isX5);
             }
         });
+
+        //播放器初始化
+        VideoViewManager.setConfig(VideoViewConfig.newBuilder()
+                        .setPlayerFactory(ExoMediaPlayerFactory.create())
+                        .build());
     }
 }

@@ -20,16 +20,15 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
-            android:name=".ui.code.MainCodeActivity"
-            android:exported="false" />
+            android:name=".ui.repository.VideoActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.repository.CodeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.repository.RepositoryTreeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BaseActivity"
             android:exported="false" />
         <activity
             android:name=".WelcomeActivity"
